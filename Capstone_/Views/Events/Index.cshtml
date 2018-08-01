@@ -1,0 +1,110 @@
+﻿@model IEnumerable<Capstone_.Models.Event>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Location)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndTime)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    if (item.IsPublic || User.IsInRole("Admin"))
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Location)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndTime)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+    </tr>
+    }
+}
+
+</table>
+<head>
+<style>
+    #map {
+        height: 500px;
+        width: 800px;
+    }
+</style>
+</head>
+@{List<string> urls = new List<string>();
+    foreach (var item in Model)
+    {
+        string itemLocation = item.Location;
+        var url = ("https://maps.googleapis.com/maps/api/geocode/json?address=" + itemLocation + "&key=AIzaSyBgT7_fsm3Isp67sXF9nHepRxaO4fYyJYQ");
+        for (int i = 0; i < urls.Count; i++)
+        {
+            if (url == urls[i])
+            {
+                goto OUTERCONTINUE;
+            }
+        }
+        if (item.IsPublic | User.IsInRole("Admin"))
+        { urls.Add(url); }
+        OUTERCONTINUE: continue;
+    }
+}
+<body>
+    <center><h2>Events</h2></center>
+        <center>
+            <div id="map"></div>
+        </center>
+        <script>
+            function initMap() {
+            var Milwaukee = { lat: 43.0389, lng: -87.9065 };
+        var map = new google.maps.Map(document.getElementById('map'), { zoom: 10, center: Milwaukee });
+                @foreach (var item in urls) {
+                    //get lat
+                    //get long
+                        <text>
+                        var marker = new google.maps.Marker({
+            //insert markers lat/long here
+                        });</text>
+                    }
+}
+        </script>
+        <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNRMFv2YIYRFyNP9nWbsz-z6JYYd-oxwo&callback=initMap" >
+        </script>
+</body>
+

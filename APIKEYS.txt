@@ -1,0 +1,12 @@
+AIzaSyCRWoaXOgSlKZEfmMCY5MiT9HIdZZgwBRo -- Google Places API KEY
+AIzaSyDNRMFv2YIYRFyNP9nWbsz-z6JYYd-oxwo -- Google Maps API KEY
+9be9a5f9206f985072fb88231b43ad7d-- Twilio authToken
+ACcbb564436b31339fd12a788f659515f1-- Twilio accountSid
+a5d1a068-f46988d9 -- MailGun API KEY
+sandboxfe46c92add184634b58c92d1aecfd9ce.mailgun.org -- MailGun Sandbox email
+https://vollme22.wixsite.com/capstone -- wix domain
+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 -- SendGrid API KEY (CapstoneKey)
+8fbc58fbc101f590b763784ab577cc15-us18 -- MailChimp API KEY
+27a1f808-107b-4a30-aa30-356fe72ab083  -- Zender API KEY
+AIzaSyBgT7_fsm3Isp67sXF9nHepRxaO4fYyJYQ -- Google Places API KEY
+
