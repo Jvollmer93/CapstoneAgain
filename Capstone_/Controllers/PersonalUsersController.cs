@@ -119,6 +119,11 @@ namespace Capstone_.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        public ActionResult Invite(int id)
+        {
+            return View();
+        }
         //[Authorize(Roles = "Company, PersonalUser")]
         //public ActionResult FollowCompany(Company companyToFollow)
         //{

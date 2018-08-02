@@ -14,18 +14,6 @@ namespace Capstone_.Models
         ApplicationDbContext db = new ApplicationDbContext();
         public string Role { get; set; }
 
-        private List<Company> companiesIFollow;
-        public List<Company> CompaniesIFollow { get { return CompaniesIFollow; } set { CompaniesIFollow = value; } }
-
-        private List<PersonalUser> personsIFollow;
-        public List<PersonalUser> PersonsIFollow { get { return PersonsIFollow; } set { PersonsIFollow = value; } }
-
-
-        //public List<Company> CompanyFollowers { get; set; }
-        //public List<Company> CompaniesIFollow { get; set; }
-        //public List<PersonalUser> PersonalFollowers { get; set; }
-        //public List<PersonalUser> PersonsIFollow { get; set; }
-
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

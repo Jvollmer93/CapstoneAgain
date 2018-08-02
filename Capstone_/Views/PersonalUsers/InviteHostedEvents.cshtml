@@ -1,0 +1,51 @@
+﻿@model Tuple<Capstone_.Models.Event, IEnumerable<Capstone_.Models.PersonalUser>>
+@{
+    ViewBag.Title = "InviteHostedEvents";
+}
+
+<h2>Hosted Events</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(tuple => tuple.Item1.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(tuple => tuple.Item1.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(tuple => tuple.Item1.Location)
+        </th>
+        <th>
+            @Html.DisplayNameFor(tuple => tuple.Item1.StartTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(tuple => tuple.Item1.EndTime)
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.Item2)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(tupel => tupel.Item1.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(tupel => tupel.Item1.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(tupel => tupel.Item1.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(tupel => tupel.Item1.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(tupel => tupel.Item1.EndTime)
+            </td>
+            <td>
+                @Html.ActionLink("Invite", "Invite", "Events", new { item = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

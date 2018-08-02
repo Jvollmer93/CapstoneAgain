@@ -24,7 +24,7 @@ namespace Capstone_.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -36,9 +36,9 @@ namespace Capstone_.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -122,7 +122,7 @@ namespace Capstone_.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -473,62 +473,6 @@ namespace Capstone_.Controllers
 
             base.Dispose(disposing);
         }
-
-        //[Authorize(Roles = "Company, PersonalUser")]
-        //public ActionResult FollowCompany(Company companyToFollow)
-        //{
-        //    string currentUserId = User.Identity.GetUserId();
-        //    ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
-
-        //    foreach (var following in currentUser.CompaniesIFollow)
-        //    {
-        //        if (following.Id == companyToFollow.Id)
-        //            return View("Index");
-        //    }
-
-        //    currentUser.CompaniesIFollow.Add(companyToFollow);
-        //    return View("Index");
-        //}
-
-        [Authorize(Roles = "Company, PersonalUser")]
-        public ActionResult FollowCompany(int id)
-        {
-            string currentUserId = User.Identity.GetUserId();
-            ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
-            Company companyToFollow = db.Companies.FirstOrDefault(x => x.Id == id);
-            if(currentUser.CompaniesIFollow.Count > 0)
-            {
-                foreach (var following in currentUser.CompaniesIFollow)
-                {
-                    if (following.Id == companyToFollow.Id)
-                        return View("Index");
-                }
-            }
-
-            currentUser.CompaniesIFollow.Add(companyToFollow);
-            return View("Index");
-        }
-        [Authorize(Roles = "Company, PersonalUser")]
-        public ActionResult FollowPerson(int id)
-        {
-            string currentUserId = User.Identity.GetUserId();
-            ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
-            PersonalUser personToFollow = db.PersonalUsers.FirstOrDefault(x => x.Id == id);
-            if(currentUser.PersonsIFollow.Count > 0)
-            {
-                foreach (var following in currentUser.PersonsIFollow)
-                {
-                    if (following.Id == personToFollow.Id)
-                        return View("Index");
-                }
-            }
-
-            currentUser.PersonsIFollow.Add(personToFollow);
-            return View("Index");
-        }
-
-        #region Helpers
-        // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
         private IAuthenticationManager AuthenticationManager
@@ -584,6 +528,52 @@ namespace Capstone_.Controllers
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
         }
-        #endregion
+
+        [Authorize(Roles = "Company, PersonalUser")]
+        public ActionResult FollowCompany(int id)
+        {
+            string currentUserId = User.Identity.GetUserId();
+            ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
+            Company companyToFollow = db.Companies.FirstOrDefault(x => x.Id == id);
+
+            if (User.IsInRole("Company"))
+            {
+                Company followingCompany = db.Companies.FirstOrDefault(x => x.Email == currentUser.Email);
+                followingCompany.CompaniesIFollow.Add(companyToFollow);
+                companyToFollow.CompaniesThatFollowMe.Add(followingCompany);
+                return RedirectToAction("Index", "Companies");
+            }
+            else if (User.IsInRole("PersonalUser"))
+            {
+                PersonalUser followingUser = db.PersonalUsers.FirstOrDefault(x => x.Email == currentUser.Email);
+                followingUser.CompaniesIFollow.Add(companyToFollow);
+                companyToFollow.PeopleThatFollowMe.Add(followingUser);
+                return View("Index", "Companies");
+            }
+            return View("Index", "Companies");
+        }
+        [Authorize(Roles = "Company, PersonalUser")]
+        public ActionResult FollowPerson(int id)
+        {
+            string currentUserId = User.Identity.GetUserId();
+            ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
+            PersonalUser personToFollow = db.PersonalUsers.FirstOrDefault(x => x.Id == id);
+
+            if (User.IsInRole("Company"))
+            {
+                Company followingCompany = db.Companies.FirstOrDefault(x => x.Email == currentUser.Email);
+                followingCompany.PeopleIFollow.Add(personToFollow);
+                personToFollow.CompaniesThatFollowMe.Add(followingCompany);
+                return View("Index", "PersonalUsers");
+            }
+            else if (User.IsInRole("PersonalUser"))
+            {
+                PersonalUser followingUser = db.PersonalUsers.FirstOrDefault(x => x.Email == currentUser.Email);
+                followingUser.PeopleIFollow.Add(personToFollow);
+                personToFollow.PeopleThatFollowMe.Add(followingUser);
+                return View("Index", "PersonalUsers");
+            }
+            return View("Index", "PersonalUsers");
+        }
     }
 }

@@ -18,14 +18,12 @@ namespace Capstone_.Models
         public string Password { get; set; }
         public bool AcceptsTextNotifications { get; set; }
         public bool AcceptsEmailNotifications { get; set; }
-        public List<ApplicationUser> Followers { get; set; }
-        public List<ApplicationUser> Following { get; set; }
 
-
-        //public List<PersonalUser> PersonalFollowwers { get; set; }
-        //public List<PersonalUser> PersonalFollowing { get; set; }
-        //public List<Company> CompanyFollowwers { get; set; }
-        //public List<Company> CompanyFollowing { get; set; }
+        public List<PersonalUser> PeopleIFollow = new List<PersonalUser>();
+        public List<PersonalUser> PeopleThatFollowMe = new List<PersonalUser>();
+        public List<Company> CompaniesIFollow = new List<Company>();
+        public List<Company> CompaniesThatFollowMe = new List<Company>();
+        public List<Event> HostedEvents = new List<Event>();
 
         [ForeignKey("ApplicationUser")]
         public string ApplicationUserID { get; set; }

@@ -16,5 +16,7 @@ namespace Capstone_.Models
         public string StartTime { get; set; }
         public string EndTime { get; set; }
         public bool IsPublic { get; set; }
+
+        public List<PersonalUser> PersonalInvited = new List<PersonalUser>();
     }
 }

@@ -119,6 +119,19 @@ namespace Capstone_.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Invite()
+        {
+            if(User.IsInRole("PersonalUser"))
+            {
+                return View("Invite", "PersonalUsers");
+            }
+            else if(User.IsInRole("Company"))
+            {
+                return View("Invite", "Company");
+            }
+            return View();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

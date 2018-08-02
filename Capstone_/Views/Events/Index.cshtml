@@ -67,10 +67,48 @@
     }
 </style>
 </head>
+@*<body onload="initialize()">
+    <div>
+        <input id="address" type="text" value="Sydney, NSW">
+        <input type="button" value="Geocode" onclick="codeAddress()">
+    </div>
+    <div id="map-canvas" style="height:90%;top:30px"></div>
+</body>
+<script>
+    var geocoder;
+    var map;
+    function initialize() {
+        geocoder = new google.maps.Geocoder();
+        var latlng = new google.maps.LatLng(-34.397, 150.644);
+        var mapOptions = {
+            zoom: 8,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    }
+
+    function codeAddress() {
+        var address = document.getElementById('address').value;
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location
+                });
+            } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+            }
+        });
+    }
+</script>*@
 @{List<string> urls = new List<string>();
+    List<string> addresses = new List<string>();
     foreach (var item in Model)
     {
         string itemLocation = item.Location;
+
         var url = ("https://maps.googleapis.com/maps/api/geocode/json?address=" + itemLocation + "&key=AIzaSyBgT7_fsm3Isp67sXF9nHepRxaO4fYyJYQ");
         for (int i = 0; i < urls.Count; i++)
         {
@@ -79,8 +117,19 @@
                 goto OUTERCONTINUE;
             }
         }
+        //for(int i = 0; i < addresses.Count; i++)
+        //{
+        //    if(itemLocation == addresses[i])
+        //    {
+        //        goto OUTERCONTINUE;
+        //    }
+        //}
         if (item.IsPublic | User.IsInRole("Admin"))
         { urls.Add(url); }
+        //if (item.IsPublic | User.IsInRole("Admin"))
+        //{
+        //    addresses.Add(itemLocation);
+        //}
         OUTERCONTINUE: continue;
     }
 }
