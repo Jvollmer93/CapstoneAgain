@@ -14,6 +14,7 @@ namespace Capstone_.Controllers
 {
     public class SMSController : TwilioController
     {
+        private string fromNumber = "+14142690237";
         // GET: SMS
         public ActionResult EventSuccesfullyCreatedSMS(string phoneNumber)
         {
@@ -22,7 +23,7 @@ namespace Capstone_.Controllers
             TwilioClient.Init(accountSid, authToken);
 
             var to = new PhoneNumber(phoneNumber);
-            var from = new PhoneNumber("+14142690237");
+            var from = new PhoneNumber(fromNumber);
 
             var message = MessageResource.Create(
                 to: to,
@@ -36,8 +37,8 @@ namespace Capstone_.Controllers
             var authToken = "9be9a5f9206f985072fb88231b43ad7d";
             TwilioClient.Init(accountSid, authToken);
 
-            var to = new PhoneNumber("+" + phoneNumber);
-            var from = new PhoneNumber("+14142690237");
+            var to = new PhoneNumber(phoneNumber);
+            var from = new PhoneNumber(fromNumber);
 
             var message = MessageResource.Create(
                 to: to,
@@ -53,7 +54,7 @@ namespace Capstone_.Controllers
             TwilioClient.Init(accountSid, authToken);
 
             var to = new PhoneNumber("+" + phoneNumber);
-            var from = new PhoneNumber("+14142690237");
+            var from = new PhoneNumber(fromNumber);
 
             var message = MessageResource.Create(
                 to: to,

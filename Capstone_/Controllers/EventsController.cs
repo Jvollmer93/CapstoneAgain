@@ -51,8 +51,10 @@ namespace Capstone_.Controllers
         {
             string currentUserId = User.Identity.GetUserId();
             ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
-            var controller = DependencyResolver.Current.GetService<SMSController>();
-            controller.ControllerContext = new ControllerContext(this.Request.RequestContext, controller);
+            var textController = DependencyResolver.Current.GetService<SMSController>();
+            textController.ControllerContext = new ControllerContext(this.Request.RequestContext, textController);
+            var emailController = DependencyResolver.Current.GetService<EmailController>();
+            textController.ControllerContext = new ControllerContext(this.Request.RequestContext, emailController);
 
             if (ModelState.IsValid)
             {
@@ -61,12 +63,20 @@ namespace Capstone_.Controllers
                 if (User.IsInRole("Company"))
                 {
                     Company CompanyHosting = db.Companies.FirstOrDefault(x => x.Email == currentUser.Email);
-                    var company = from e in db.PersonalUsers
+                    var company = from e in db.Companies
                                  where e.Email == currentUser.Email
                                  select e;
                     foreach (var item in company)
                     {
                         item.HostedEvents.Add(@event);
+                        if (item.AcceptsTextNotifications)
+                        {
+                            textController.EventSuccesfullyCreatedSMS(item.PhoneNumber);
+                        }
+                        if (item.AcceptsEmailNotifications)
+                        {
+                            emailController.ConfirmEvent(item.Email);
+                        }
                         db.SaveChanges();
                     }
                     //CompanyHosting.HostedEvents.Add(@event);
@@ -83,7 +93,11 @@ namespace Capstone_.Controllers
                         item.HostedEvents.Add(@event);
                         if(item.AcceptsTextNotifications)
                         {
-                            controller.EventSuccesfullyCreatedSMS(item.PhoneNumber);
+                            textController.EventSuccesfullyCreatedSMS(item.PhoneNumber);
+                        }
+                        if(item.AcceptsEmailNotifications)
+                        {
+                            emailController.ConfirmEvent(item.Email);
                         }
                         db.SaveChanges();
                     }
