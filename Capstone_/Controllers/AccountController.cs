@@ -548,7 +548,7 @@ namespace Capstone_.Controllers
                 PersonalUser followingUser = db.PersonalUsers.FirstOrDefault(x => x.Email == currentUser.Email);
                 followingUser.CompaniesIFollow.Add(companyToFollow);
                 companyToFollow.PeopleThatFollowMe.Add(followingUser);
-                return View("Index", "Companies");
+                return RedirectToAction("Index", "Companies");
             }
             return View("Index", "Companies");
         }
@@ -564,14 +564,14 @@ namespace Capstone_.Controllers
                 Company followingCompany = db.Companies.FirstOrDefault(x => x.Email == currentUser.Email);
                 followingCompany.PeopleIFollow.Add(personToFollow);
                 personToFollow.CompaniesThatFollowMe.Add(followingCompany);
-                return View("Index", "PersonalUsers");
+                return RedirectToAction("Index", "PersonalUsers");
             }
             else if (User.IsInRole("PersonalUser"))
             {
                 PersonalUser followingUser = db.PersonalUsers.FirstOrDefault(x => x.Email == currentUser.Email);
                 followingUser.PeopleIFollow.Add(personToFollow);
                 personToFollow.PeopleThatFollowMe.Add(followingUser);
-                return View("Index", "PersonalUsers");
+                return RedirectToAction("Index", "PersonalUsers");
             }
             return View("Index", "PersonalUsers");
         }

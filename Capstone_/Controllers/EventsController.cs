@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Capstone_.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Capstone_.Controllers
 {
@@ -48,10 +49,47 @@ namespace Capstone_.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Date,Location,StartTime,EndTime,IsPublic")] Event @event)
         {
+            string currentUserId = User.Identity.GetUserId();
+            ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
+            var controller = DependencyResolver.Current.GetService<SMSController>();
+            controller.ControllerContext = new ControllerContext(this.Request.RequestContext, controller);
+
             if (ModelState.IsValid)
             {
                 db.Events.Add(@event);
                 db.SaveChanges();
+                if (User.IsInRole("Company"))
+                {
+                    Company CompanyHosting = db.Companies.FirstOrDefault(x => x.Email == currentUser.Email);
+                    var company = from e in db.PersonalUsers
+                                 where e.Email == currentUser.Email
+                                 select e;
+                    foreach (var item in company)
+                    {
+                        item.HostedEvents.Add(@event);
+                        db.SaveChanges();
+                    }
+                    //CompanyHosting.HostedEvents.Add(@event);
+                    db.SaveChanges();
+                }
+                else if (User.IsInRole("PersonalUser"))
+                {
+                    PersonalUser PersonHosting = db.PersonalUsers.FirstOrDefault(x => x.Email == currentUser.Email);
+                    var person = from e in db.PersonalUsers
+                                 where e.Email == currentUser.Email
+                                 select e;
+                    foreach (var item in person)
+                    {
+                        item.HostedEvents.Add(@event);
+                        if(item.AcceptsTextNotifications)
+                        {
+                            controller.EventSuccesfullyCreatedSMS(item.PhoneNumber);
+                        }
+                        db.SaveChanges();
+                    }
+                    //PersonHosting.HostedEvents.Add(@event);
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
 

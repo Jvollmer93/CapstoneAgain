@@ -18,6 +18,9 @@
             @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.AcceptsTextNotifications)
         </th>
         <th>
@@ -35,13 +38,16 @@
             @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.PhoneNumber)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.AcceptsTextNotifications)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.AcceptsEmailNotifications)
         </td>
         <td>
-            @Html.ActionLink("Follow", "FollowPerson", "Account", new { id = item.Id}, null) |
+            @Html.ActionLink("Follow", "FollowPerson", "Account", new { id = item.Id }, null) |
             @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
             @Html.ActionLink("Details", "Details", new { id = item.Id }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.Id })

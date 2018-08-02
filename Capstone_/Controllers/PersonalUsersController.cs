@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Mvc.Html;
 using Capstone_.Models;
 using Microsoft.AspNet.Identity;
 
@@ -47,7 +48,7 @@ namespace Capstone_.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Email,Password,AcceptsTextNotifications,AcceptsEmailNotifications")] PersonalUser personalUser)
+        public ActionResult Create([Bind(Include = "Id,Name,Email,PhoneNumber,Password,AcceptsTextNotifications,AcceptsEmailNotifications")] PersonalUser personalUser)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +82,7 @@ namespace Capstone_.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult Edit([Bind(Include = "Id,Name,Email,Password,AcceptsTextNotifications,AcceptsEmailNotifications")] PersonalUser personalUser)
+        public ActionResult Edit([Bind(Include = "Id,Name,Email,PhoneNumber,Password,AcceptsTextNotifications,AcceptsEmailNotifications")] PersonalUser personalUser)
         {
             if (ModelState.IsValid)
             {
@@ -120,40 +121,26 @@ namespace Capstone_.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Invite(int id)
+        public ActionResult InviteHostedEvents()
         {
-            return View();
+            string currentUserId = User.Identity.GetUserId();
+            ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
+            PersonalUser personHosting = db.PersonalUsers.FirstOrDefault(x => x.Email == currentUser.Email);
+            //Event modelEvent = new Event();
+            //var personalUsers = new List<PersonalUser>();
+            //foreach (var user in db.PersonalUsers)
+            //{
+            //    personalUsers.Add(user);
+            //}
+            //ViewBag.PersonalUsers = personalUsers;
+
+            List<Event> hostedEvents = personHosting.HostedEvents;
+
+            //db.PersonalUsers.Where(x=>x.Id == personHosting.Id).Select()
+            //var model = new PersonalUserAndHostedEvents { HostedEvents = hostedEvents, personalUser = personHosting, ModelEvent = modelEvent };
+            //ViewBag.HostedEvents = personHosting.HostedEvents;
+            return View(hostedEvents);
         }
-        //[Authorize(Roles = "Company, PersonalUser")]
-        //public ActionResult FollowCompany(Company companyToFollow)
-        //{
-        //    string currentUserId = User.Identity.GetUserId();
-        //    ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
-
-        //    foreach (var following in currentUser.CompaniesIFollow)
-        //    {
-        //        if (following.Id == companyToFollow.Id)
-        //            return View("Index");
-        //    }
-
-        //    currentUser.CompaniesIFollow.Add(companyToFollow);
-        //    return View("Index");
-        //}
-        //[Authorize(Roles = "Company, PersonalUser")]
-        //public ActionResult FollowPerson(PersonalUser personToFollow)
-        //{
-        //    string currentUserId = User.Identity.GetUserId();
-        //    ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
-
-        //    foreach (var following in currentUser.CompaniesIFollow)
-        //    {
-        //        if (following.Id == personToFollow.Id)
-        //            return View("Index");
-        //    }
-
-        //    currentUser.PersonsIFollow.Add(personToFollow);
-        //    return View("Index");
-        //}
     
         protected override void Dispose(bool disposing)
         {

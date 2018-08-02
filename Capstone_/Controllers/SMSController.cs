@@ -15,19 +15,19 @@ namespace Capstone_.Controllers
     public class SMSController : TwilioController
     {
         // GET: SMS
-        public ActionResult SendSms(string phoneNumber)
+        public ActionResult EventSuccesfullyCreatedSMS(string phoneNumber)
         {
             var accountSid = "ACcbb564436b31339fd12a788f659515f1";
             var authToken = "9be9a5f9206f985072fb88231b43ad7d";
             TwilioClient.Init(accountSid, authToken);
 
-            var to = new PhoneNumber("+" + phoneNumber);
+            var to = new PhoneNumber(phoneNumber);
             var from = new PhoneNumber("+14142690237");
 
             var message = MessageResource.Create(
                 to: to,
                 from: from,
-                body: "Message");
+                body: "Event Successfully Created");
             return Content(message.Sid);
         }
         public ActionResult DayOfEvent(string phoneNumber)
