@@ -480,3 +480,14 @@ C:\Users\jvoll\Documents\Projects\BadCapstone2\Capstone_\obj\Debug\Capstone_.csp
 C:\Users\jvoll\Documents\Projects\BadCapstone2\Capstone_\obj\Debug\Capstone_.Migrations.init1.resources
 C:\Users\jvoll\Documents\Projects\BadCapstone2\Capstone_\obj\Debug\Capstone_.Migrations.updates.resources
 C:\Users\jvoll\Documents\Projects\BadCapstone2\Capstone_\obj\Debug\Capstone_.csprojAssemblyReference.cache
+C:\Users\jvoll\Documents\Projects\BadCapstone2\Capstone_\obj\Debug\Capstone_.Migrations.latlng.resources
+C:\Users\jvoll\Documents\Projects\BadCapstone2\Capstone_\bin\Google.Api.Maps.Service.dll
+C:\Users\jvoll\Documents\Projects\BadCapstone2\Capstone_\bin\Google.Apis.Coordinate.v1.dll
+C:\Users\jvoll\Documents\Projects\BadCapstone2\Capstone_\bin\GoogleDirections.dll
+C:\Users\jvoll\Documents\Projects\BadCapstone2\Capstone_\bin\GoogleMaps.Net.dll
+C:\Users\jvoll\Documents\Projects\BadCapstone2\Capstone_\bin\GoogleMapsApi.dll
+C:\Users\jvoll\Documents\Projects\BadCapstone2\Capstone_\bin\GoogleDirections.pdb
+C:\Users\jvoll\Documents\Projects\BadCapstone2\Capstone_\bin\Google.Api.Maps.Service.xml
+C:\Users\jvoll\Documents\Projects\BadCapstone2\Capstone_\bin\Google.Apis.Coordinate.v1.pdb
+C:\Users\jvoll\Documents\Projects\BadCapstone2\Capstone_\bin\Google.Apis.Coordinate.v1.xml
+C:\Users\jvoll\Documents\Projects\BadCapstone2\Capstone_\obj\Debug\Capstone_.Migrations.followinginvited.resources

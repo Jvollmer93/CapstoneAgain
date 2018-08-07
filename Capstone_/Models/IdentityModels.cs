@@ -37,5 +37,7 @@ namespace Capstone_.Models
         public DbSet<Company> Companies { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<PersonalUser> PersonalUsers { get; set; }
+        public DbSet<Following> Followers { get; set; }
+        public DbSet<Invited> Invited { get; set; }
     }
 }

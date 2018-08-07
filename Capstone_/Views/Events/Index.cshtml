@@ -59,14 +59,7 @@
 }
 
 </table>
-<head>
-<style>
-    #map {
-        height: 500px;
-        width: 800px;
-    }
-</style>
-</head>
+
 @*<body onload="initialize()">
     <div>
         <input id="address" type="text" value="Sydney, NSW">
@@ -103,20 +96,22 @@
         });
     }
 </script>*@
-@{List<string> urls = new List<string>();
+@*@{List<string> urls = new List<string>();
     List<string> addresses = new List<string>();
     foreach (var item in Model)
     {
+        var geocoder = new GoogleDirections.Geocoder("AIzaSyDNRMFv2YIYRFyNP9nWbsz - z6JYYd - oxwo");
         string itemLocation = item.Location;
+        var locations = geocoder.Geocode(itemLocation);
 
-        var url = ("https://maps.googleapis.com/maps/api/geocode/json?address=" + itemLocation + "&key=AIzaSyBgT7_fsm3Isp67sXF9nHepRxaO4fYyJYQ");
-        for (int i = 0; i < urls.Count; i++)
-        {
-            if (url == urls[i])
-            {
-                goto OUTERCONTINUE;
-            }
-        }
+        //var url = ("https://maps.googleapis.com/maps/api/geocode/json?address=" + itemLocation + "&key=AIzaSyBgT7_fsm3Isp67sXF9nHepRxaO4fYyJYQ");
+        ////for (int i = 0; i < urls.Count; i++)
+        //{
+        //    if (url == urls[i])
+        //    {
+        //        goto OUTERCONTINUE;
+        //    }
+        //}
         //for(int i = 0; i < addresses.Count; i++)
         //{
         //    if(itemLocation == addresses[i])
@@ -132,25 +127,52 @@
         //}
         OUTERCONTINUE: continue;
     }
-}
+}*@
+<head>
+    <style>
+        #map {
+            height: 500px;
+            width: 800px;
+        }
+    </style>
+</head>
 <body>
     <center><h2>Events</h2></center>
         <center>
             <div id="map"></div>
         </center>
         <script>
+            var map;
             function initMap() {
-            var Milwaukee = { lat: 43.0389, lng: -87.9065 };
-        var map = new google.maps.Map(document.getElementById('map'), { zoom: 10, center: Milwaukee });
-                @foreach (var item in urls) {
-                    //get lat
-                    //get long
-                        <text>
-                        var marker = new google.maps.Marker({
-            //insert markers lat/long here
-                        });</text>
+                var Milwaukee = { lat: 43.0389, lng: -87.9065 };
+                var map = new google.maps.Map(document.getElementById('map'), { zoom: 10, center: Milwaukee });
+                var position = { lat: 43.059665, lng: -87.885602 };
+                var marker = new google.maps.Marker({ position: new google.maps.LatLng(43.059665, -87.885602), map: map, title: null });
+            }
+                @*@{ List<GoogleDirections.LatLng> Markers = new List<GoogleDirections.LatLng>();
+                    foreach (var item in Model)
+                    {
+                        var geocoder = new GoogleDirections.Geocoder("AIzaSyDNRMFv2YIYRFyNP9nWbsz - z6JYYd - oxwo");
+                        var locations = geocoder.Geocode(item.Location);
+
+
+                        var latlng = locations.First().LatLng;
+                        Markers.Add(latlng);
                     }
-}
+
+                }*@
+                //for (i = 0; i < Markers.Length; i++) {
+
+                //    var marker = new google.maps.Marker({
+                //        position: Markers[i],
+                //        map: map,
+                //        title: null
+                //    });
+                //}
+
+                // To add the marker to the map, call setMap();
+                //marker.setMap(map);
+
         </script>
         <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNRMFv2YIYRFyNP9nWbsz-z6JYYd-oxwo&callback=initMap" >

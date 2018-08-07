@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -16,7 +18,12 @@ namespace Capstone_.Models
         public string StartTime { get; set; }
         public string EndTime { get; set; }
         public bool IsPublic { get; set; }
+        public double Lat { get; set; }
+        public double Long { get; set; }
 
-        public List<PersonalUser> PersonalInvited = new List<PersonalUser>();
+        [ForeignKey("ApplicationUser")]
+        public string ApplicationUserID { get; set; }
+        [JsonIgnore]
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

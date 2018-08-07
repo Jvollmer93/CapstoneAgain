@@ -53,7 +53,7 @@ namespace Capstone_.Controllers
             var authToken = "9be9a5f9206f985072fb88231b43ad7d";
             TwilioClient.Init(accountSid, authToken);
 
-            var to = new PhoneNumber("+" + phoneNumber);
+            var to = new PhoneNumber(phoneNumber);
             var from = new PhoneNumber(fromNumber);
 
             var message = MessageResource.Create(

@@ -19,12 +19,6 @@ namespace Capstone_.Models
         public bool AcceptsTextNotifications { get; set; }
         public bool AcceptsEmailNotifications { get; set; }
 
-        public List<PersonalUser> PeopleIFollow = new List<PersonalUser>();
-        public List<PersonalUser> PeopleThatFollowMe = new List<PersonalUser>();
-        public List<Company> CompaniesIFollow = new List<Company>();
-        public List<Company> CompaniesThatFollowMe = new List<Company>();
-        public List<Event> HostedEvents = new List<Event>();
-
         [ForeignKey("ApplicationUser")]
         public string ApplicationUserID { get; set; }
         public ApplicationUser ApplicationUser { get; set; }

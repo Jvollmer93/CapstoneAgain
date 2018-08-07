@@ -134,12 +134,12 @@ namespace Capstone_.Controllers
             //}
             //ViewBag.PersonalUsers = personalUsers;
 
-            List<Event> hostedEvents = personHosting.HostedEvents;
+            //List<Event> hostedEvents = personHosting.HostedEvents;
 
             //db.PersonalUsers.Where(x=>x.Id == personHosting.Id).Select()
             //var model = new PersonalUserAndHostedEvents { HostedEvents = hostedEvents, personalUser = personHosting, ModelEvent = modelEvent };
             //ViewBag.HostedEvents = personHosting.HostedEvents;
-            return View(hostedEvents);
+            return View(/*hostedEvents*/);
         }
     
         protected override void Dispose(bool disposing)

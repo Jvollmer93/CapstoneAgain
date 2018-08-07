@@ -10,3 +10,18 @@ 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 -- SendGri
 27a1f808-107b-4a30-aa30-356fe72ab083  -- Zender API KEY
 AIzaSyBgT7_fsm3Isp67sXF9nHepRxaO4fYyJYQ -- Google Places API KEY
 
+State
+Disabled
+IP Address
+184.173.153.194 Manage IPs
+SMTP Hostname
+smtp.mailgun.org
+Default SMTP Login
+postmaster@brominecapstone.pro
+API Base URL
+https://api.mailgun.net/v3/brominecapstone.pro
+Default Password
+006ef350a0167f62173a212c46dbb1a4-a5d1a068-142f932dManage SMTP credentials
+API Key
+48a8e79e3b86f9ccb5c3fd3fdc5276c7-a5d1a068-f46988d9
+
