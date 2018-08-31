@@ -529,6 +529,20 @@ namespace Capstone_.Controllers
             }
         }
 
+        [Authorize(Roles = "PersonalUser")]
+        public ActionResult Follow(string id)
+        {
+            string currentUserId = User.Identity.GetUserId();
+            ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
+            int currentPersonId = db.PersonalUsers.FirstOrDefault(x => x.Email == currentUser.Email).Id;
+            Following following = new Following();
+            following.PersonalUserId = currentPersonId;
+            following.ApplicationUserID = id;
+            db.Followers.Add(following);
+            db.SaveChanges();
+            return View("Index");
+        }
+
         //[Authorize(Roles = "Company, PersonalUser")]
         //public ActionResult FollowCompany(int id)
         //{
