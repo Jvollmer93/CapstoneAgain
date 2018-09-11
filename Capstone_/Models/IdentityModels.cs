@@ -27,10 +27,12 @@ namespace Capstone_.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+            Database.SetInitializer<ApplicationDbContext>(null);
         }
 
         public static ApplicationDbContext Create()
         {
+            Database.SetInitializer<ApplicationDbContext>(null);
             return new ApplicationDbContext();
         }
         public DbSet<Admin> Admins { get; set; }

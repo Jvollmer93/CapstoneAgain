@@ -540,54 +540,8 @@ namespace Capstone_.Controllers
             following.ApplicationUserID = id;
             db.Followers.Add(following);
             db.SaveChanges();
-            return View("Index");
+            return RedirectToAction("Index", "Home");
         }
 
-        //[Authorize(Roles = "Company, PersonalUser")]
-        //public ActionResult FollowCompany(int id)
-        //{
-        //    string currentUserId = User.Identity.GetUserId();
-        //    ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
-        //    Company companyToFollow = db.Companies.FirstOrDefault(x => x.Id == id);
-
-        //    if (User.IsInRole("Company"))
-        //    {
-        //        Company followingCompany = db.Companies.FirstOrDefault(x => x.Email == currentUser.Email);
-        //        followingCompany.CompaniesIFollow.Add(companyToFollow);
-        //        companyToFollow.CompaniesThatFollowMe.Add(followingCompany);
-        //        return RedirectToAction("Index", "Companies");
-        //    }
-        //    else if (User.IsInRole("PersonalUser"))
-        //    {
-        //        PersonalUser followingUser = db.PersonalUsers.FirstOrDefault(x => x.Email == currentUser.Email);
-        //        followingUser.CompaniesIFollow.Add(companyToFollow);
-        //        companyToFollow.PeopleThatFollowMe.Add(followingUser);
-        //        return RedirectToAction("Index", "Companies");
-        //    }
-        //    return View("Index", "Companies");
-        //}
-        //[Authorize(Roles = "Company, PersonalUser")]
-        //public ActionResult FollowPerson(int id)
-        //{
-        //    string currentUserId = User.Identity.GetUserId();
-        //    ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
-        //    PersonalUser personToFollow = db.PersonalUsers.FirstOrDefault(x => x.Id == id);
-
-        //    if (User.IsInRole("Company"))
-        //    {
-        //        Company followingCompany = db.Companies.FirstOrDefault(x => x.Email == currentUser.Email);
-        //        followingCompany.PeopleIFollow.Add(personToFollow);
-        //        personToFollow.CompaniesThatFollowMe.Add(followingCompany);
-        //        return RedirectToAction("Index", "PersonalUsers");
-        //    }
-        //    else if (User.IsInRole("PersonalUser"))
-        //    {
-        //        PersonalUser followingUser = db.PersonalUsers.FirstOrDefault(x => x.Email == currentUser.Email);
-        //        followingUser.PeopleIFollow.Add(personToFollow);
-        //        personToFollow.PeopleThatFollowMe.Add(followingUser);
-        //        return RedirectToAction("Index", "PersonalUsers");
-        //    }
-        //    return View("Index", "PersonalUsers");
-        //}
     }
 }
